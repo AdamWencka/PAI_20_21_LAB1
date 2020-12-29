@@ -2,6 +2,7 @@ package com.example.STM.model;
 
 import com.example.STM.model.enums.Status;
 import com.example.STM.model.enums.Type;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,19 +22,26 @@ public class Task {
     private String title;
     private String description;
     @Column(name = "date_added")
-    private LocalDateTime dateAdded = LocalDateTime.now();
+    private LocalDateTime dateAdded ;
     private Type type;
+    @Enumerated(value = EnumType.STRING)
     private Status status;
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL
-    )
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_assigned",nullable = false)
+    @JsonIgnoreProperties({"tasks"})
     private User author;
 
-    public Task(String title, String description, LocalDateTime dateAdded, Type type, Status status,User author) {
+    public Task(String title, String description,  Type type, Status status) {
         this.title = title;
         this.description = description;
-        this.dateAdded = dateAdded;
+        this.dateAdded = LocalDateTime.now();
+        this.type = type;
+        this.status = status;
+    }
+    public Task(String title, String description, Type type, Status status,User author) {
+        this.title = title;
+        this.description = description;
+        this.dateAdded = LocalDateTime.now();
         this.type = type;
         this.status = status;
         this.author =author;
