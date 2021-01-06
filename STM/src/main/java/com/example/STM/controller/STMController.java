@@ -9,7 +9,7 @@ import com.example.STM.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +22,7 @@ public class STMController {
         this.userService = userService;
         this.taskService = taskService;
     }
+    //zad - a
     @PostMapping("/users/userCreate")
     public User createUser(
             @RequestParam("name") String name,
@@ -31,6 +32,7 @@ public class STMController {
     {
         return userService.insertUser(new User(name,lastName,email,password));
     }
+    //zad - b
     @GetMapping("/users")
     public List<User> getAllUsers(){
         return userService.selectAllUsers();
@@ -53,15 +55,23 @@ public class STMController {
         }
         return (User) userFound.get();
     }
+    // zad - c
+    @GetMapping("/user/findByIdOrEmail")
+    public User findUserByIdOrEmail(@RequestParam String k){
+        return userService.findByIdOrEmail(k);
+    }
 
+    // zad - d
     @PutMapping("/user/status/id={id}")
     public boolean activateUser(@PathVariable("id") Integer id){
         return userService.activateUser(id);
     }
+    //zad - e
     @DeleteMapping("/user/delete")
     public String deleteUser(@RequestParam("id")Integer id){
         return userService.deleteUserByID(id);
     }
+    //zad - f
     @PostMapping("/task/taskCreate")
     public Task createTask(
             @RequestParam("title") String title,
@@ -72,13 +82,13 @@ public class STMController {
             ){
             return taskService.createTask(title,description,type,status,userId);
     }
-
+    // zad - g
     @GetMapping("/tasks")
     public List<Task> getAllTasks(){
         return taskService.getAllTasks();
     }
 
-    
+    // zad - h
     @GetMapping("/task")
     public List<Task> getTask(
             @RequestParam("name") Optional<String> name,
@@ -87,7 +97,7 @@ public class STMController {
     ){
         return taskService.getTask(name,status,type);
     }
-
+    // zad - i
     @PutMapping("/task/status")
     public  String changeTaskStatus(
             @RequestParam("id") Integer id,
@@ -95,7 +105,7 @@ public class STMController {
         return taskService.changeTaskStatus(id,status);
     }
 
-
+    // zad - j
     @DeleteMapping("/task/delete")
     public String deleteTask(@RequestParam("id") Integer id){
         return taskService.deleteTask(id);

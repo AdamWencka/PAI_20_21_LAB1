@@ -18,10 +18,11 @@ public class TaskService {
     private TaskRepository taskRepository;
     @Autowired
     private UserRepository userRepository;
-
+    // zad - g (użyłem adnotacji Query w TaskRepository)
     public List<Task> getAllTasks(){
         return taskRepository.findAllByDateDesc();
     }
+    // zad - f
     public Task createTask(String title, String description, Type type, Status status, Integer accountId) {
         Optional<User> assignedUser = userRepository.findById(accountId);
         if (assignedUser.isPresent()) {
@@ -31,7 +32,7 @@ public class TaskService {
         }
         return null;
     }
-
+    // zad - h
     public List<Task> getTask(Optional<String> name, Optional<Status> status, Optional<Type> type){
         if (name.isPresent()){
             return taskRepository.findByTitle(name.get());
@@ -42,7 +43,7 @@ public class TaskService {
         }
         return null;
     }
-
+    // zad - i
     public String changeTaskStatus(Integer id, Status status){
         Optional<Task> taskStatusToChange = taskRepository.findById(id);
         if (taskStatusToChange.isPresent()){
@@ -60,7 +61,7 @@ public class TaskService {
 
 
 
-
+    // zad - j (usuwa tylko dane zadanie)
     public String deleteTask(Integer id) {
         Optional<Task> taskToDelete = taskRepository.findById(id);
         if (taskToDelete.isPresent()) {

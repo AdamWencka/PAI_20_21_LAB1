@@ -14,10 +14,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-
+    // zad - a
     public User insertUser(User user){
      return userRepository.save(user);
     }
+    //zad - b
     public List<User> selectAllUsers(){
         return userRepository.findAll();
     }
@@ -28,6 +29,17 @@ public class UserService {
     public Optional findByEmail(String email){
         return userRepository.findByEmail(email);
     }
+
+    // zad - c
+    public User findByIdOrEmail(String k){
+        Optional<User> user;
+        if(k.contains("@")) user = userRepository.findByEmail(k);
+        else user = userRepository.findById(Integer.valueOf(k));
+        return user.get();
+    }
+
+
+    // zad - d
     public boolean activateUser(Integer id){
         Optional<User> userToActivate = userRepository.findById(id);
         boolean userStatus= false;
@@ -40,6 +52,7 @@ public class UserService {
         }
         return userStatus;
     }
+    // zad - e ( user ma CascadeType.ALL dzięki czemu wszystkie zadania użytkownika zostaną usunięte
     public String deleteUserByID(Integer id){
         Optional<User> userToDelete = userRepository.findById(id);
         if(userToDelete.isPresent()){
