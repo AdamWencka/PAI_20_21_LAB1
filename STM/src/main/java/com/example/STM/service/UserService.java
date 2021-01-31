@@ -37,6 +37,12 @@ public class UserService {
         else user = userRepository.findById(Integer.valueOf(k));
         return user.get();
     }
+    public User findUserByIdOrEmail(int id){
+    return userRepository.findById(id).orElse(null);
+    }
+    public User findUserByIdOrEmail(String email){
+        return userRepository.findByEmail(email).orElse(null);
+    }
 
 
     // zad - d
@@ -65,6 +71,8 @@ public class UserService {
     }
 
 
-
+    public User findUserByEmailAndPassword(String email, String password){
+        return userRepository.findUserByEmailAndPassword(email,password).orElse(null);
+    }
 
 }

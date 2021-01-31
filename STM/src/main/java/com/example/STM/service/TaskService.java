@@ -72,4 +72,10 @@ public class TaskService {
         }
         return "Task not found";
     }
+    public List<Task> selectAllTasks(){
+        return taskRepository.findAll();
+    }
+    public Task selectTaskById(Integer  taskId){
+        return taskRepository.findById(taskId).orElse(null);
+    }
 }
